@@ -1,5 +1,7 @@
+// import 'bootstrap/scss/bootstrap.scss'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
 
 const apiSite = 'https://todolist-api.hexschool.io';
 
@@ -27,7 +29,7 @@ function SignUp() {
 
   return (
     
-    <div >
+    <div className='col-8'>
       <h2>註冊帳號</h2>
       <input className='Col'
           value={email}
@@ -75,7 +77,7 @@ function SignIn() {
   };
 
   return (
-    <div >
+    <div  className='col-8'>
       <h2>登入</h2>
       <input
         value={email}
@@ -123,7 +125,7 @@ function CheckOut({ token, setToken }) {
   };
 
   return (
-    <div >
+    <div className='col-8'>
       <h2>身份驗證</h2>
       <input
         value={token}
@@ -163,7 +165,7 @@ function SignOut() {
   };
 
   return (
-    <div >
+    <div className='col-8'>
       <h2>登出</h2>
       <input
         value={token}
@@ -253,35 +255,60 @@ const TodoList = ({ token }) => {
   };
 
   return (
-    <div >
+
+
+    
+    <div className='col-md-8'>
       <input
         value={newTodo}
         onChange={(e) => setNewTodo(e.target.value)}
         placeholder='New Todo'
       />
       <button onClick={addTodo}>新增待辦任務</button>
-      <ul>
-        {todos.map((todo, index) => (
-          <li key={index}>
-            {todo.content} {todo.status ? '完成' : '未完成'}
-            | {todoEdit[todo.id]}
-            <input type="text" placeholder='更新值' onChange={
-              (e) => {
-                const newTodoEdit = {
-                  ...todoEdit
+      <table className="table">
+                <thead>
+                  <tr>
+                    <th scope="col" >
+                      刪除
+                    </th>
+                    <th scope="col" width="300px">任務</th>
+                    <th scope="col">更新任務</th>
+                    
+                    <th scope="col">狀態</th>
+                    
+                  </tr>
+                </thead>
+                <tbody>
+                {
+                  todos.map((todo, index) => {
+                  return (
+                    <tr key={index}>
+                    <td><button type="button"  onClick={() => deleteTodo(todo.id)}>刪除</button></td>
+                    <td> {todo.content} 
+                    </td>
+                    <td>{todoEdit[todo.id]}<input type="text" placeholder='更新值' onChange={
+                      (e) => {
+                        const newTodoEdit = {
+                          ...todoEdit
+                        }
+                        newTodoEdit[todo.id] = e.target.value
+                        setTodoEdit(newTodoEdit)
+                      }
+                    } /> <button onClick={() => updateTodo(todo.id)}>更新</button></td>
+                    
+                    <td>{todo.status} 
+                    <input type="checkbox" size="bg" value={todo.status?'完成':'未完成'} onChange={() => toggleStatus(todo.id)} checked={todo.status} />
+                    <label htmlFor="checkbox">{todo.status?'完成':'未完成'}</label> 
+                    </td>
+                  </tr>
+                  )
+                })
                 }
-                newTodoEdit[todo.id] = e.target.value
-                setTodoEdit(newTodoEdit)
-              }
-            } />
-            <button onClick={() => deleteTodo(todo.id)}>刪除</button>
-            <button onClick={() => updateTodo(todo.id)}>更新</button>
-            <button onClick={() => toggleStatus(todo.id)}>
-              狀態更新
-            </button>
-          </li>
-        ))}
-      </ul>
+                </tbody>
+              </table>
+     
+
+     
     </div>
   );
 };
@@ -302,30 +329,33 @@ function App_wk3() {
 
   return (
     <>
+      <div id="root">
 
- <h1>(wk3) : 註冊/登入/身份驗證/登出</h1>
-  
-  <div className="col bg-yellow" >
-      <div className="row">
+ <div className="conatiner" style={{backgroundColor: '#FFD370'}}>
+
+<h1 className="text-center">(wk3) : 註冊/登入/身份驗證/登出</h1>
+      <div className="row justify-content-center">
       <SignUp />
       </div>
-      <div className="row">
+      <div className="row justify-content-center">
       <SignIn />
       </div>
-      <div className="row">     
+      <div className="row justify-content-center">     
         <CheckOut setToken={setToken} token={token} />
         <SignOut />
       
-      </div>
+      </div>   
+  
   </div>
-
-
-        <div className="col">
+  <hr />
+  <div className="row justify-content-center" style={{backgroundColor: '#FFD370'}}>
+            <div className="col-md-8">
           <h2>待辦清單</h2>
           {
             token && <TodoList token={token} />
           }
         </div>
+        </div></div>
     </>
   );
 }

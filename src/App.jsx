@@ -20,7 +20,7 @@ function App() {
         <NavLink to="/Wk1" style={style}>第一週作業</NavLink> |
         <NavLink to="/Wk2" style={style}>第二週作業</NavLink> |
         <NavLink to="/" style={style}>第三週作業</NavLink> |
-        <NavLink to="/Wk4" style={style}>第4週作業</NavLink> 
+        {/* <NavLink to="/Wk4" style={style}>第4週作業</NavLink>  */}
       </div>
       <hr />
     
@@ -28,7 +28,7 @@ function App() {
         <Route path="/Wk1" element={<Wk1 />}></Route>
         <Route path="/Wk2" element={<Wk2 />}></Route>
         <Route path="/" element={<Wk3 />}></Route>
-        <Route path="/Wk4" element={<Wk4 />}></Route>
+        {/* <Route path="/Wk4" element={<Wk4 />}></Route> */}
       </Routes>
     </>
   )
